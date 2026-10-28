@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+/* Palette: indigo ink (the dye of Andhra's kalamkari) + turmeric, on a cool rice-paper page. */
+:root {
+  --page: #f2f3f6;
+  --surface: #ffffff;
+  --ink: #1e2659;
+  --text: #23263a;
+  --muted: #5b6178;
+  --line: #dee0e8;
+  --turmeric: #c9860f;
+  --turmeric-soft: #f6e7c6;
+  --user-bubble: #1e2659;
+  --user-text: #f4f5fb;
+  --danger: #b3261e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #12152a;
+    --surface: #1a1e38;
+    --ink: #c9cdf2;
+    --text: #e7e8f0;
+    --muted: #9da2bd;
+    --line: #2c3152;
+    --turmeric: #f0b43a;
+    --turmeric-soft: #3a3220;
+    --user-bubble: #2d3780;
+    --user-text: #f4f5fb;
+    --danger: #f2b8b5;
+  }
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-turmeric: var(--turmeric);
+  --color-turmeric-soft: var(--turmeric-soft);
+  --color-user-bubble: var(--user-bubble);
+  --color-user-text: var(--user-text);
+  --color-danger: var(--danger);
+  --font-display: "Tiro Telugu", Georgia, serif;
+  --font-sans: "Hanken Grotesk", system-ui, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--page);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--turmeric);
+  outline-offset: 2px;
+}
+
+/* The one orchestrated moment: the Telugu glyph settles in on first load. */
+@keyframes glyph-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+.glyph-in {
+  animation: glyph-in 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+.caret::after,
+.live .prose-tk > :last-child::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--turmeric);
+  animation: caret 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glyph-in,
+  .caret::after,
+  .live .prose-tk > :last-child::after {
+    animation: none;
+  }
+}
+
+/* Assistant replies are Markdown; give them readable prose styles. */
+.prose-tk {
+  line-height: 1.7;
+  font-size: 1rem;
+}
+.prose-tk > * + * {
+  margin-top: 0.85em;
+}
+.prose-tk h1,
+.prose-tk h2,
+.prose-tk h3 {
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.prose-tk h1 { font-size: 1.3rem; }
+.prose-tk h2 { font-size: 1.15rem; }
+.prose-tk h3 { font-size: 1.02rem; }
+.prose-tk ul { list-style: disc; padding-left: 1.3em; }
+.prose-tk ol { list-style: decimal; padding-left: 1.4em; }
+.prose-tk li + li { margin-top: 0.3em; }
+.prose-tk li::marker { color: var(--turmeric); }
+.prose-tk a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--turmeric); text-underline-offset: 3px; }
+.prose-tk strong { font-weight: 600; }
+.prose-tk blockquote { border-left: 3px solid var(--turmeric); padding-left: 0.9em; color: var(--muted); }
+.prose-tk code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--turmeric-soft);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+.prose-tk pre {
+  background: #161a33;
+  border: 1px solid var(--line);
+  color: #e7e8f0;
+  padding: 0.9em 1em;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.prose-tk pre code { background: none; padding: 0; color: inherit; }
+.prose-tk table { border-collapse: collapse; width: 100%; font-size: 0.93rem; display: block; overflow-x: auto; }
+.prose-tk th, .prose-tk td { border: 1px solid var(--line); padding: 0.4em 0.7em; text-align: left; }
+.prose-tk th { font-weight: 600; }
